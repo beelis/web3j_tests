@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -81,14 +82,6 @@ public class AppTest {
 	// TODO use localhost if a local geth client is running or replace with the docker container IP: docker inspect <containerId> | grep IPAddress
 	public static final String CLIENT_IP = "172.17.0.2";
 	public static final String CLIENT_PORT = "8545";
-
-	public static final String MULTIPLY_CONTRACT =
-			"pragma solidity ^0.4.0;\n" + 
-					"contract test {\n" +
-					"    function multiply(uint a) returns(uint d) {\n" +
-					"        return a * 7;\n" +
-					"    }\n" + 
-					"}";
 
 	public static final String MULTIPLY_CONTRACT_COMPILED = "0x6060604052346000575b60458060156000396000f3606060405260e060020a6000350463c6888fa18114601c575b6000565b346000576029600435603b565b60408051918252519081900360200190f35b600781025b91905056";
 
@@ -253,6 +246,7 @@ public class AppTest {
 		if(setupFailed) {
 			return;
 		}
+		String MULTIPLY_CONTRACT = IOUtils.toString(AppTest.class.getClassLoader().getResourceAsStream("smartContracts/MultiplyContract.sol"), "UTF-8");
 
 		String sourceCode = MULTIPLY_CONTRACT;
 		JsonObject result = compileSolidityCode(sourceCode);
