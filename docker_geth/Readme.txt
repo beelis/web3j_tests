@@ -1,7 +1,7 @@
 mzi@BSIM3236 ~/Desktop/private/github/web3j_tests/docker_geth (master)
 $ docker build -t ethereum_geth_2 .
 
-$ docker run -it -p 8545:8545 -d ethereum_geth_2 --password LocalPassword.txt --unlock 0 --mine --rpc --rpcaddr "0.0.0.0" --nodiscover –maxpeers 0
+$ docker run -it -p 8545:8545 -d ethereum_geth_2 --password LocalPassword.txt --unlock 0 --mine --rpc --rpcaddr "0.0.0.0" --nodiscover --maxpeers 0
 
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND
@@ -42,3 +42,15 @@ exit
 
 // geth console https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console 
 // more commands https://github.com/ethereum/wiki/wiki/JavaScript-API
+
+// install solc
+https://github.com/threatstream/mhn/issues/284
+
+apt-get install -y python-software-properties
+apt-get install -y software-properties-common python-software-properties
+
+https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial
+sudo add-apt-repository ppa:ethereum/ethereum
+sudo apt-get update
+sudo apt-get install solc
+which solc

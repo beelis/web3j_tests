@@ -8,7 +8,13 @@ RUN echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
 RUN \
   apt-get update && apt-get upgrade -q -y && \
-  apt-get install -y --no-install-recommends git make gcc libc6-dev curl ca-certificates
+  apt-get install -y --no-install-recommends git make gcc libc6-dev curl ca-certificates software-properties-common python-software-properties && \
+  add-apt-repository ppa:ethereum/ethereum && \
+  apt-get update && \
+  apt-get install -y --no-install-recommends solc
+
+# build solc from source would require cmake 3.0, which is not provided through apt (2.8 only)
+# nice?: also build cmake from source to build solc
 
 # install go
 ENV GOLANG_VERSION 1.7.5
