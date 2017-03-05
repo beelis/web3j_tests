@@ -34,6 +34,11 @@ ENV PATH=${PATH}:${GOROOT}/bin:${GOPATH}/bin
 RUN \
   git clone --depth 1 https://github.com/ethereum/go-ethereum
 
+# check with mzi, switch to the next tag after 1.5.9 and check that the patch files are compatible 
+#RUN \
+#  git clone https://github.com/ethereum/go-ethereum
+#  cd go-ethereum && git checkout v1.5.9 && cd ..
+
 # patch geth sources to minimize mining time according to
 # http://ethereum.stackexchange.com/questions/11407/minimize-mining-times-for-private-blockchain
 COPY block_validator.go /
