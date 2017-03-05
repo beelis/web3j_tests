@@ -1,8 +1,6 @@
 pragma solidity ^0.4.0;
-
-    contract test {\n" +
-        function multiply(uint a) returns(uint d) {
-            return a * 7;
-        }
-    }
-
+contract test {
+    function multiply(uint a) returns(uint d) {
+        return a * 7;
+     }
+}

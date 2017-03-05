@@ -82,8 +82,10 @@ public class AppTest {
 	// TODO use localhost if a local geth client is running or replace with the docker container IP: docker inspect <containerId> | grep IPAddress
 	public static final String CLIENT_IP = "172.17.0.2";
 	public static final String CLIENT_PORT = "8545";
+	
+	public static String MULTIPLY_CONTRACT;
 
-	public static final String MULTIPLY_CONTRACT_COMPILED = "0x6060604052346000575b60458060156000396000f3606060405260e060020a6000350463c6888fa18114601c575b6000565b346000576029600435603b565b60408051918252519081900360200190f35b600781025b91905056";
+	public static final String MULTIPLY_CONTRACT_COMPILED = "0x60606040523415600b57fe5b5b60788061001a6000396000f300606060405263ffffffff60e060020a600035041663c6888fa181146020575bfe5b3415602757fe5b60306004356042565b60408051918252519081900360200190f35b600781025b9190505600a165627a7a72305820607f675b12dd400faac69f23cf9a05d41bb28f8ca2c60ff7377830044bc88b3d0029";
 
 	/**
 	 * greeter contract inspired by
@@ -131,6 +133,7 @@ public class AppTest {
 	@BeforeClass
 	public static void setUp() {
 		try {
+			MULTIPLY_CONTRACT = IOUtils.toString(AppTest.class.getClassLoader().getResourceAsStream("smartContracts/MultiplyContract.sol"), "UTF-8");
 			String clientUrl = String.format("http://%s:%s", CLIENT_IP, CLIENT_PORT);
 			web3 = Web3j.build(new HttpService(clientUrl));
 		} 
@@ -246,9 +249,8 @@ public class AppTest {
 		if(setupFailed) {
 			return;
 		}
-		String MULTIPLY_CONTRACT = IOUtils.toString(AppTest.class.getClassLoader().getResourceAsStream("smartContracts/MultiplyContract.sol"), "UTF-8");
-
 		String sourceCode = MULTIPLY_CONTRACT;
+
 		JsonObject result = compileSolidityCode(sourceCode);
 		for (Entry<String, JsonElement> o : result.entrySet()) {
 			System.out.println(String.format("Key=%s, value=%s", o.getKey(), o.getValue()));
@@ -269,7 +271,7 @@ public class AppTest {
 			System.out.println(String.format("Key=%s, value=%s", o.getKey(), o.getValue()));
 		}
 
-		String codeCompiled = info.get("code").toString().replaceAll("\"", "");
+		String codeCompiled = test.get("code").toString().replaceAll("\"", "");
 		String sourceOut = info.get("source").toString().replaceAll("\"", "");
 		String abiDefinition = info.get("abiDefinition").toString();
 
